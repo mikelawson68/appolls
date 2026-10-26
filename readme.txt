@@ -5,7 +5,7 @@ Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.0
 Stable tag: 1.0.2
-License: Commercial
+License: GPLv2 or later
 
 Create unlimited, accessible WordPress polls with live results, scheduling, duplicate-response controls, CSV exports, and data ownership.
 
