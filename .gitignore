@@ -1,0 +1,7 @@
+.env
+.env.*
+*.bak
+*.bak-*
+.backups/
+.DS_Store
+dist/
