@@ -110,7 +110,7 @@ final class APPolls_Admin
         $this->post_guard('appolls_export', false); $poll_id = absint($_GET['poll_id'] ?? 0); $poll = APPolls_Lifecycle::poll_by_id($poll_id);
         if (!$poll) { wp_die('Poll not found.'); }
         nocache_headers(); header('Content-Type: text/csv; charset=utf-8'); header('Content-Disposition: attachment; filename="' . sanitize_file_name($poll['poll_key']) . '-responses.csv"');
-        $out = fopen('php://output', 'w'); fputcsv($out, ['response_key','submitted_at','email','question','choice','answer','other']); foreach (APPolls_Lifecycle::export_rows($poll_id) as $row) { fputcsv($out, $row); } fclose($out); exit;
+        $out = fopen('php://output', 'w'); fputcsv($out, ['response_key','submitted_at','email','question','choice','answer','other']); foreach (APPolls_Lifecycle::export_rows($poll_id) as $row) { fputcsv($out, $row); } exit;
     }
 
     private function results_table(array $results): void { if (empty($results['rows'])) { echo '<p>No responses yet.</p>'; return; } echo '<table class="widefat striped"><thead><tr><th>Choice</th><th>Votes</th><th>Share</th></tr></thead><tbody>'; foreach ($results['rows'] as $row) { echo '<tr><td>' . esc_html($row['label'] ?: $row['answer_value'] ?? 'Response') . '</td><td>' . esc_html((string) $row['votes']) . '</td><td>' . esc_html((string) $row['percent']) . '%</td></tr>'; } echo '</tbody></table>'; }

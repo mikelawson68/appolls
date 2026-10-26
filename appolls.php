@@ -8,6 +8,8 @@
  * Requires PHP: 8.0
  * Author: artistproWP
  * Author URI: https://artistprowp.com/
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: appolls
  * Network: true
  */
@@ -28,13 +30,10 @@ require_once APPOLLS_PLUGIN_DIR . 'includes/class-appolls-lifecycle.php';
 require_once APPOLLS_PLUGIN_DIR . 'includes/class-appolls-plugin.php';
 require_once APPOLLS_PLUGIN_DIR . 'includes/class-appolls-admin.php';
 require_once APPOLLS_PLUGIN_DIR . 'includes/class-appolls-cli.php';
-require_once APPOLLS_PLUGIN_DIR . 'includes/class-artistprowp-license-client.php';
-require_once APPOLLS_PLUGIN_DIR . 'includes/class-appolls-license.php';
 
 register_activation_hook(__FILE__, ['APPolls_Schema', 'install']);
 
 add_action('plugins_loaded', static function (): void {
-    APPolls_License::init();
     APPolls_Plugin::instance()->boot();
     APPolls_Admin::instance()->boot();
 });
