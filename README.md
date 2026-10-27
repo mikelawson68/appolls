@@ -22,6 +22,10 @@ The community distribution does not require a license key and does not contact a
 
 The plugin is GPLv2 or later. Paid plans at [artistproWP](https://artistprowp.com/appolls/) provide updates and support for the covered sites. Installed functionality remains available after paid service expires. Purchasing support is optional for community users. Community releases here can be updated manually by installing the latest release ZIP. A paid plan provides the retail package with its automatic update client and one year of support; use the service key for the number of sites purchased. This does not restrict your open-source software rights. WordPress.org availability will be announced after directory review; it is not yet approved.
 
+## Moving from the community edition to a paid plan
+
+After purchasing, download the retail ZIP and find your service key in [My Account](https://artistprowp.com/my-account/). Back up your site. In WordPress choose Plugins → Add New → Upload Plugin, select the retail ZIP and choose **Replace current with uploaded** when prompted. Activate the key under apPolls → License. Existing plugin data remains in your WordPress database. [See support instructions](https://artistprowp.com/support/).
+
 ## Help and contributions
 
 Use GitHub issues for reproducible public bug reports. Never include license keys, passwords, subscriber data, or private site access. Paid customer assistance is available through [support](https://artistprowp.com/support/). See CONTRIBUTING.md and SECURITY.md.
