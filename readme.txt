@@ -4,7 +4,7 @@ Tags: polls, voting, survey, audience, results
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 
 Create unlimited, accessible WordPress polls with live results, scheduling, duplicate-response controls, CSV exports, and data ownership.
@@ -49,6 +49,9 @@ In dedicated tables in your own WordPress database.
 No. Deactivation and uninstall do not erase poll or response data.
 
 == Changelog ==
+
+= 1.0.3 =
+* Protect paid installations from conflicting WordPress.org update offers.
 
 = 1.0.2 =
 * Hardened required-answer validation, single-choice cardinality and non-active poll visibility.
