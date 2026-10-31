@@ -608,7 +608,8 @@ if (!class_exists('APPolls_Lifecycle')) {
             global $wpdb;
             $t = APPolls_Schema::tables();
             $rows = $wpdb->get_results($wpdb->prepare("SELECT r.response_key, r.submitted_at, r.respondent_email, q.question_text, c.label AS choice_label, a.answer_value, a.other_text FROM {$t['responses']} r INNER JOIN {$t['response_answers']} a ON a.response_id = r.id INNER JOIN {$t['questions']} q ON q.id = a.question_id LEFT JOIN {$t['choices']} c ON c.id = a.choice_id WHERE r.poll_id = %d ORDER BY r.submitted_at DESC, a.id ASC", $poll_id), ARRAY_A);
-            return is_array($rows) ? $rows : [];
+            if ($wpdb->last_error !== '' || !is_array($rows)) throw new RuntimeException('Could not read poll responses.');
+            return $rows;
         }
 
         /**

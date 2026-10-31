@@ -105,12 +105,34 @@ final class APPolls_Admin
 
     public function delete_question(): void { $this->post_guard('appolls_delete_question', false); $poll_id = absint($_GET['poll_id'] ?? 0); APPolls_Lifecycle::delete_question(absint($_GET['question_id'] ?? 0)); $this->redirect('appolls-new', $poll_id, 'question-deleted'); }
 
+    /** Prevent spreadsheet applications from executing untrusted response text. */
+    public static function csv_safe_cell($value): string
+    {
+        $value = (string) $value;
+        return preg_match('/^[\s\x00-\x1f]*[=+@-]/u', $value) || preg_match('/^[\t\r\n]/', $value) ? "'" . $value : $value;
+    }
+
     public function export(): void
     {
         $this->post_guard('appolls_export', false); $poll_id = absint($_GET['poll_id'] ?? 0); $poll = APPolls_Lifecycle::poll_by_id($poll_id);
         if (!$poll) { wp_die('Poll not found.'); }
+        $out = fopen('php://temp/maxmemory:2097152', 'w+');
+        if ($out === false) wp_die('Could not prepare poll export. Please try again.', 'apPolls', ['response'=>500]);
+        try {
+            if (fputcsv($out, ['response_key','submitted_at','email','question','choice','answer','other'], ',', '"', '') === false) throw new RuntimeException('CSV write failed.');
+            foreach (APPolls_Lifecycle::export_rows($poll_id) as $row) {
+                if (fputcsv($out, array_map([self::class, 'csv_safe_cell'], $row), ',', '"', '') === false) throw new RuntimeException('CSV write failed.');
+            }
+            if (!rewind($out)) throw new RuntimeException('CSV rewind failed.');
+        } catch (Throwable $e) {
+            // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Close the temporary stream on failure.
+            fclose($out);
+            wp_die('Could not prepare poll export. Please try again.', 'apPolls', ['response'=>500]);
+        }
         nocache_headers(); header('Content-Type: text/csv; charset=utf-8'); header('Content-Disposition: attachment; filename="' . sanitize_file_name($poll['poll_key']) . '-responses.csv"');
-        $out = fopen('php://output', 'w'); fputcsv($out, ['response_key','submitted_at','email','question','choice','answer','other']); foreach (APPolls_Lifecycle::export_rows($poll_id) as $row) { fputcsv($out, $row); } exit;
+        fpassthru($out);
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Close the temporary response stream.
+        fclose($out); exit;
     }
 
     private function results_table(array $results): void { if (empty($results['rows'])) { echo '<p>No responses yet.</p>'; return; } echo '<table class="widefat striped"><thead><tr><th>Choice</th><th>Votes</th><th>Share</th></tr></thead><tbody>'; foreach ($results['rows'] as $row) { echo '<tr><td>' . esc_html($row['label'] ?: $row['answer_value'] ?? 'Response') . '</td><td>' . esc_html((string) $row['votes']) . '</td><td>' . esc_html((string) $row['percent']) . '%</td></tr>'; } echo '</tbody></table>'; }
