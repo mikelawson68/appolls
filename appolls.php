@@ -3,7 +3,7 @@
  * Plugin Name: apPolls
  * Plugin URI: https://artistprowp.com/appolls/
  * Description: Create unlimited accessible WordPress polls with live results, scheduling, vote controls, analytics, exports, and optional audience routing.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Requires at least: 6.4
  * Requires PHP: 8.0
  * Author: artistproWP
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('APPOLLS_VERSION', '1.0.2');
+define('APPOLLS_VERSION', '1.0.3');
 define('APPOLLS_PLUGIN_FILE', __FILE__);
 define('APPOLLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
