@@ -1,10 +1,10 @@
-# apPolls 1.0.3
+# apPolls 1.0.4
 
-Community release under GPLv2 or later. Standalone plugin functionality is included without paid activation or a private update client. This release protects spreadsheet users from formula-like poll responses and reports database errors during export.
+Community release under GPLv2 or later. Standalone plugin functionality is included without paid activation or a private update client. This release prevents activation alongside the separate artistpro Polls directory edition, which shares poll data and plugin code.
 
 ## Install
 
-Download `appolls-1.0.3-community.zip` from this release. In WordPress, use Plugins → Add New → Upload Plugin, install the ZIP and activate apPolls. A license key is not required for this community build. Back up your site and database before updating. This community build uses the same plugin folder as the paid edition; installing it over a paid copy replaces that copy, including its automatic-update client. Paid customers should use their licensed update instead.
+Download `appolls-1.0.4-community.zip` from this release. In WordPress, use Plugins → Add New → Upload Plugin, install the ZIP and activate apPolls. A license key is not required for this community build. Back up your site and database before updating. This community build uses the same plugin folder as the paid edition; installing it over a paid copy replaces that copy, including its automatic-update client. Paid customers should use their licensed update instead.
 
 ## Optional updates and support
 
